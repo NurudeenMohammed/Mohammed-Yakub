@@ -6,69 +6,9 @@
   <meta name="theme-color" content="#f6f7fb">
   <title>Meta AI — Your creative companion</title>
   <style>
-    :root {
-      color-scheme: light;
-      --ink: #171923;
-      --muted: #737789;
-      --line: #e8e9ef;
-      --surface: #fff;
-      --page: #f6f7fb;
-      --blue: #4267f5;
-      --blue-dark: #3154df;
-      --shadow: 0 18px 55px rgba(27, 35, 75, .08);
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; background: var(--page); color: var(--ink); font: 15px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    button, textarea { font: inherit; }
-    button { cursor: pointer; }
-    .app { display: grid; grid-template-columns: 252px minmax(0, 1fr); min-height: 100vh; max-width: 1600px; margin: auto; }
-    aside { padding: 26px 17px; border-right: 1px solid var(--line); background: rgba(255,255,255,.7); display: flex; flex-direction: column; gap: 25px; }
-    .brand { display: flex; align-items: center; gap: 11px; padding: 0 9px; font-size: 19px; font-weight: 720; letter-spacing: -.5px; }
-    .brand-mark { width: 30px; height: 30px; border-radius: 11px; display: grid; place-items: center; color: white; font-size: 19px; background: linear-gradient(135deg,#5884ff,#8548dc 60%,#ef5b9c); }
-    .new-chat { border: 0; border-radius: 13px; padding: 12px 14px; background: var(--blue); color: #fff; font-weight: 650; box-shadow: 0 6px 15px #4267f52e; text-align: left; }
-    .new-chat:hover, .send:hover { background: var(--blue-dark); }
-    .side-label { margin: 0 9px 7px; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
-    .history { display: grid; gap: 4px; }
-    .history button { padding: 9px; border: 0; border-radius: 9px; background: transparent; color: #4c5060; text-align: left; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-    .history button:hover { background: #f0f1f7; }
-    .account { margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 10px 8px; border-top: 1px solid var(--line); color: #45495a; }
-    .avatar { width: 33px; height: 33px; display:grid;place-items:center; border-radius: 50%; background: #e8eaff; color: #4957bc; font-weight: 700; }
-    main { min-width: 0; display: flex; flex-direction: column; }
-    header { height: 74px; padding: 0 35px; display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
-    .header-pill { border: 1px solid var(--line); border-radius: 20px; background: white; padding: 8px 13px; color: #55596a; font-size: 13px; }
-    .content { width: min(820px, 100%); margin: 0 auto; padding: 5vh 25px 24px; flex: 1; display: flex; flex-direction: column; }
-    .welcome { margin: auto 0 27px; text-align: center; }
-    .orb { width: 62px; height: 62px; margin: 0 auto 18px; border-radius: 22px; background: linear-gradient(145deg,#6087ff,#9050db 65%,#f26ca4); box-shadow: 0 10px 30px #755be83d; display: grid; place-items: center; color: #fff; font-size: 36px; }
-    h1 { margin: 0 0 9px; font-size: clamp(29px, 5vw, 40px); line-height: 1.15; letter-spacing: -1.5px; }
-    .subtitle { margin: 0; color: var(--muted); }
-    .suggestions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 27px; text-align: left; }
-    .suggestion { padding: 14px 15px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.78); color: #424657; transition: .15s ease; }
-    .suggestion:hover { border-color: #b7c3ff; transform: translateY(-1px); box-shadow: 0 5px 16px #303d7510; }
-    .messages { display: none; flex-direction: column; gap: 18px; padding: 4px 0 24px; }
-    .messages.active { display: flex; }
-    .message { display: flex; gap: 10px; align-items: flex-start; }
-    .message.user { justify-content: flex-end; }
-    .bubble { max-width: min(82%, 620px); padding: 13px 16px; border-radius: 17px; background: white; box-shadow: 0 3px 14px #25305c0b; white-space: pre-wrap; overflow-wrap: anywhere; }
-    .user .bubble { background: #e9edff; border-bottom-right-radius: 5px; }
-    .assistant .bubble { border-bottom-left-radius: 5px; }
-    .mini-mark { flex: 0 0 29px; width: 29px; height: 29px; border-radius: 10px; display:grid;place-items:center; color:white; background: linear-gradient(135deg,#6087ff,#a34dd1); font-size: 18px; }
-    .composer-wrap { margin-top: auto; }
-    .composer { padding: 10px; border: 1px solid #e1e3ec; border-radius: 20px; background: white; box-shadow: var(--shadow); }
-    textarea { display: block; width: 100%; min-height: 50px; max-height: 160px; resize: none; border: 0; outline: 0; padding: 8px 10px; color: var(--ink); background: transparent; }
-    textarea::placeholder { color: #9a9dac; }
-    .composer-actions { display: flex; justify-content: space-between; align-items: center; padding: 2px 3px 0 9px; color: #9296a5; font-size: 12px; }
-    .send { width: 38px; height: 38px; border: 0; border-radius: 13px; background: var(--blue); color: white; display: grid; place-items: center; }
-    .send:disabled { background: #cbd0e2; cursor: not-allowed; }
-    .disclaimer { margin: 10px 0 0; text-align: center; color: #8b8e9d; font-size: 11px; }
-    @media (max-width: 700px) {
-      .app { display: block; }
-      aside { display: none; }
-      header { height: 58px; padding: 0 17px; }
-      .content { min-height: calc(100vh - 58px); padding: 4vh 17px 18px; }
-      .suggestions { grid-template-columns: 1fr; }
-      .welcome { margin-bottom: 20px; }
-      .bubble { max-width: 88%; }
-    }
+    :root{color-scheme:light;--ink:#171923;--muted:#737789;--line:#e8e9ef;--blue:#4267f5;--blue-dark:#3154df;--shadow:0 18px 55px rgba(27,35,75,.08)}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:#f6f7fb;color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,textarea{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:252px minmax(0,1fr);min-height:100vh;max-width:1600px;margin:auto}aside{padding:26px 17px;border-right:1px solid var(--line);background:rgba(255,255,255,.7);display:flex;flex-direction:column;gap:25px}.brand{display:flex;align-items:center;gap:11px;padding:0 9px;font-size:19px;font-weight:720;letter-spacing:-.5px}.brand-mark,.mini-mark{display:grid;place-items:center;color:white;background:linear-gradient(135deg,#5884ff,#8548dc 60%,#ef5b9c)}.brand-mark{width:30px;height:30px;border-radius:11px;font-size:19px}.new-chat{border:0;border-radius:13px;padding:12px 14px;background:var(--blue);color:#fff;font-weight:650;box-shadow:0 6px 15px #4267f52e;text-align:left}.new-chat:hover,.send:hover{background:var(--blue-dark)}.side-label{margin:0 9px 7px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:700}.history{display:grid;gap:4px;max-height:58vh;overflow:auto}.history-item{display:flex;align-items:center;gap:4px}.history-item .open-chat{min-width:0;flex:1;padding:9px;border:0;border-radius:9px;background:transparent;color:#4c5060;text-align:left;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.history-item.selected .open-chat,.history-item .open-chat:hover{background:#f0f1f7}.delete-chat{border:0;background:transparent;color:#85899a;border-radius:8px;padding:6px}.delete-chat:hover{background:#ffe9ed;color:#b72f46}.account{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px 8px;border-top:1px solid var(--line);color:#45495a}.avatar{width:33px;height:33px;display:grid;place-items:center;border-radius:50%;background:#e8eaff;color:#4957bc;font-weight:700}main{min-width:0;display:flex;flex-direction:column}header{height:74px;padding:0 35px;display:flex;justify-content:flex-end;align-items:center;gap:12px}.header-pill{border:1px solid var(--line);border-radius:20px;background:white;padding:8px 13px;color:#55596a;font-size:13px}.content{width:min(820px,100%);margin:0 auto;padding:5vh 25px 24px;flex:1;display:flex;flex-direction:column}.welcome{margin:auto 0 27px;text-align:center}.orb{width:62px;height:62px;margin:0 auto 18px;border-radius:22px;background:linear-gradient(145deg,#6087ff,#9050db 65%,#f26ca4);box-shadow:0 10px 30px #755be83d;display:grid;place-items:center;color:#fff;font-size:36px}h1{margin:0 0 9px;font-size:clamp(29px,5vw,40px);line-height:1.15;letter-spacing:-1.5px}.subtitle{margin:0;color:var(--muted)}.suggestions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:27px;text-align:left}.suggestion{padding:14px 15px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.78);color:#424657;transition:.15s ease}.suggestion:hover{border-color:#b7c3ff;transform:translateY(-1px);box-shadow:0 5px 16px #303d7510}.messages{display:none;flex-direction:column;gap:18px;padding:4px 0 24px}.messages.active{display:flex}.message{display:flex;gap:10px;align-items:flex-start}.message.user{justify-content:flex-end}.bubble{max-width:min(82%,620px);padding:13px 16px;border-radius:17px;background:white;box-shadow:0 3px 14px #25305c0b;white-space:pre-wrap;overflow-wrap:anywhere}.user .bubble{background:#e9edff;border-bottom-right-radius:5px}.assistant .bubble{border-bottom-left-radius:5px}.mini-mark{flex:0 0 29px;width:29px;height:29px;border-radius:10px;font-size:18px}.composer-wrap{margin-top:auto}.composer{padding:10px;border:1px solid #e1e3ec;border-radius:20px;background:white;box-shadow:var(--shadow)}textarea{display:block;width:100%;min-height:50px;max-height:160px;resize:none;border:0;outline:0;padding:8px 10px;color:var(--ink);background:transparent}textarea::placeholder{color:#9a9dac}.composer-actions{display:flex;justify-content:space-between;align-items:center;padding:2px 3px 0 9px;color:#9296a5;font-size:12px}.send{width:38px;height:38px;border:0;border-radius:13px;background:var(--blue);color:white;display:grid;place-items:center}.send:disabled{background:#cbd0e2;cursor:not-allowed}.disclaimer{margin:10px 0 0;text-align:center;color:#8b8e9d;font-size:11px}.notice{min-height:22px;margin:5px 4px;color:#a33c46;font-size:13px;text-align:center}.typing{color:var(--muted);font-size:13px;padding-left:40px}
+    @media(max-width:700px){.app{display:block}aside{display:none}header{height:58px;padding:0 17px}.content{min-height:calc(100vh - 58px);padding:4vh 17px 18px}.suggestions{grid-template-columns:1fr}.welcome{margin-bottom:20px}.bubble{max-width:88%}}
   </style>
 </head>
 <body>
@@ -76,113 +16,37 @@
     <aside aria-label="Sidebar">
       <div class="brand"><span class="brand-mark" aria-hidden="true">∞</span> Meta AI</div>
       <button class="new-chat" id="newChat">＋ &nbsp; New chat</button>
-      <section>
-        <p class="side-label">Recent</p>
-        <nav class="history" id="history" aria-label="Recent chats"></nav>
-      </section>
-      <div class="account"><span class="avatar">N</span><span>Guest user</span></div>
+      <section><p class="side-label">Recent chats</p><nav class="history" id="history" aria-label="Recent chats"></nav></section>
+      <div class="account"><span class="avatar">G</span><span>Private guest session</span></div>
     </aside>
     <main>
-      <header><span class="header-pill">✦ &nbsp; Imagine</span><span class="header-pill">⋯</span></header>
+      <header><span class="header-pill">✦ &nbsp; AI chat</span></header>
       <section class="content">
-        <div class="welcome" id="welcome">
-          <div class="orb" aria-hidden="true">∞</div>
-          <h1>Hi there. How can I help?</h1>
-          <p class="subtitle">Ask a question, explore an idea, or make something new.</p>
-          <div class="suggestions">
-            <button class="suggestion">✍️ &nbsp; Help me write a thoughtful thank-you note</button>
-            <button class="suggestion">💡 &nbsp; Give me a creative weekend project</button>
-            <button class="suggestion">🥗 &nbsp; Suggest a quick dinner with pantry staples</button>
-            <button class="suggestion">🧭 &nbsp; Explain a tricky topic in simple terms</button>
-          </div>
+        <div class="welcome" id="welcome"><div class="orb" aria-hidden="true">∞</div><h1>Hi there. How can I help?</h1><p class="subtitle">Ask a question, explore an idea, or make something new.</p>
+          <div class="suggestions"><button class="suggestion">✍️ &nbsp; Help me write a thoughtful thank-you note</button><button class="suggestion">💡 &nbsp; Give me a creative weekend project</button><button class="suggestion">🥗 &nbsp; Suggest a quick dinner with pantry staples</button><button class="suggestion">🧭 &nbsp; Explain a tricky topic in simple terms</button></div>
         </div>
-        <div class="messages" id="messages" aria-live="polite"></div>
-        <div class="composer-wrap">
-          <form class="composer" id="chatForm">
-            <textarea id="prompt" rows="1" aria-label="Message Meta AI" placeholder="Ask Meta AI anything..."></textarea>
-            <div class="composer-actions"><span>↵ &nbsp; Enter to send</span><button class="send" id="send" type="submit" aria-label="Send message" disabled><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5m0 0L6 11m6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-          </form>
-          <p class="disclaimer">Meta AI demo UI · Responses are generated locally and may not always be accurate.</p>
-        </div>
+        <div class="messages" id="messages" aria-live="polite"></div><div class="typing" id="typing" hidden>Thinking…</div>
+        <div class="composer-wrap"><div class="notice" id="notice" role="status"></div><form class="composer" id="chatForm"><textarea id="prompt" rows="1" aria-label="Message Meta AI" placeholder="Ask Meta AI anything..."></textarea><div class="composer-actions"><span>↵ &nbsp; Enter to send</span><button class="send" id="send" type="submit" aria-label="Send message" disabled><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5m0 0L6 11m6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></form><p class="disclaimer">AI responses can be inaccurate. Avoid sharing sensitive personal information.</p></div>
       </section>
     </main>
   </div>
   <script>
-    const form = document.querySelector('#chatForm');
-    const input = document.querySelector('#prompt');
-    const send = document.querySelector('#send');
-    const messages = document.querySelector('#messages');
-    const welcome = document.querySelector('#welcome');
-    const history = document.querySelector('#history');
-
-    function addMessage(text, role) {
-      const row = document.createElement('div');
-      row.className = `message ${role}`;
-      if (role === 'assistant') {
-        const icon = document.createElement('span');
-        icon.className = 'mini-mark';
-        icon.textContent = '∞';
-        icon.setAttribute('aria-hidden', 'true');
-        row.append(icon);
-      }
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble';
-      bubble.textContent = text;
-      row.append(bubble);
-      messages.append(row);
-      row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    function localReply(text) {
-      const lower = text.toLowerCase();
-      if (/(write|draft|note|email|story)/.test(lower)) return 'Absolutely! A good starting point is to keep it warm, specific, and natural. Tell me who it is for and the tone you want, and I can help shape a draft.\n\nHere’s a simple structure: a friendly opening, one specific detail, and a thoughtful close.';
-      if (/(idea|creative|project|weekend)/.test(lower)) return 'Try a “small joys” photo journal: take five photos of little things you enjoy over the weekend, then arrange them into a mini collage with a one-line caption for each. It’s easy to do and makes a lovely keepsake.';
-      if (/(dinner|recipe|cook|food|meal)/.test(lower)) return 'A flexible pantry dinner: sauté garlic or onion, add a can of beans or chickpeas and any vegetables you have, then season with paprika, salt, and pepper. Serve over rice, pasta, or toast. What ingredients are in your kitchen?';
-      if (/(explain|what is|how does|simple terms)/.test(lower)) return 'I can help break that down. Share the specific topic, and I’ll explain it in plain language with an example and a short summary.';
-      if (/(hello|hi|hey)/.test(lower)) return 'Hi! What would you like to explore today? I can help brainstorm, write, plan, or explain a topic.';
-      return 'Thanks for asking! This is a front-end demo, so I’m using a few local example responses rather than a connected AI model. To get a tailored answer, connect this interface to an AI service through a secure backend. In the meantime, tell me a bit more about what you need and I’ll do my best with this demo.';
-    }
-
-    function submitPrompt(value) {
-      const text = value.trim();
-      if (!text) return;
-      welcome.hidden = true;
-      messages.classList.add('active');
-      addMessage(text, 'user');
-      input.value = '';
-      input.style.height = 'auto';
-      send.disabled = true;
-      window.setTimeout(() => {
-        addMessage(localReply(text), 'assistant');
-        send.disabled = !input.value.trim();
-      }, 450);
-      if (!history.children.length) {
-        const item = document.createElement('button');
-        item.textContent = text;
-        item.title = text;
-        item.addEventListener('click', () => input.focus());
-        history.append(item);
-      }
-    }
-
-    form.addEventListener('submit', event => { event.preventDefault(); submitPrompt(input.value); });
-    input.addEventListener('input', () => {
-      send.disabled = !input.value.trim();
-      input.style.height = 'auto';
-      input.style.height = `${Math.min(input.scrollHeight, 160)}px`;
-    });
-    input.addEventListener('keydown', event => {
-      if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); form.requestSubmit(); }
-    });
-    document.querySelectorAll('.suggestion').forEach(button => button.addEventListener('click', () => submitPrompt(button.textContent.replace(/^\S+\s+/, '').trim())));
-    document.querySelector('#newChat').addEventListener('click', () => {
-      messages.replaceChildren();
-      messages.classList.remove('active');
-      welcome.hidden = false;
-      input.value = '';
-      send.disabled = true;
-      input.focus();
-    });
+    const form=document.querySelector('#chatForm'),input=document.querySelector('#prompt'),send=document.querySelector('#send'),messages=document.querySelector('#messages'),welcome=document.querySelector('#welcome'),history=document.querySelector('#history'),notice=document.querySelector('#notice'),typing=document.querySelector('#typing');
+    let activeChatId=null,busy=false;
+    async function api(path,options={}){const response=await fetch(path,{...options,headers:{'Content-Type':'application/json',...(options.headers||{})}});const data=await response.json().catch(()=>({error:'The server returned an invalid response.'}));if(!response.ok)throw new Error(data.error||'Request failed.');return data}
+    function addMessage(text,role){const row=document.createElement('div');row.className=`message ${role}`;if(role==='assistant'){const icon=document.createElement('span');icon.className='mini-mark';icon.textContent='∞';icon.setAttribute('aria-hidden','true');row.append(icon)}const bubble=document.createElement('div');bubble.className='bubble';bubble.textContent=text;row.append(bubble);messages.append(row)}
+    function showChat(chat){activeChatId=chat.id;messages.replaceChildren();for(const message of chat.messages)addMessage(message.content,message.role);messages.classList.toggle('active',chat.messages.length>0);welcome.hidden=chat.messages.length>0;renderHistory();window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})}
+    async function loadHistory(){const {chats}=await api('/api/chats');history.replaceChildren();for(const chat of chats){const item=document.createElement('div');item.className=`history-item${chat.id===activeChatId?' selected':''}`;const open=document.createElement('button');open.className='open-chat';open.textContent=chat.title;open.title=chat.title;open.addEventListener('click',()=>openChat(chat.id));const del=document.createElement('button');del.className='delete-chat';del.textContent='×';del.title='Delete chat';del.setAttribute('aria-label',`Delete ${chat.title}`);del.addEventListener('click',()=>deleteChat(chat.id));item.append(open,del);history.append(item)}}
+    function renderHistory(){loadHistory().catch(showError)}
+    async function openChat(id){try{const {chat}=await api(`/api/chats/${encodeURIComponent(id)}`);showChat(chat)}catch(error){showError(error)}}
+    async function deleteChat(id){try{await api(`/api/chats/${encodeURIComponent(id)}`,{method:'DELETE'});if(activeChatId===id){activeChatId=null;messages.replaceChildren();messages.classList.remove('active');welcome.hidden=false}await loadHistory()}catch(error){showError(error)}}
+    function showError(error){notice.textContent=error.message||'Something went wrong.'}
+    async function submitPrompt(value){const text=value.trim();if(!text||busy)return;busy=true;send.disabled=true;notice.textContent='';welcome.hidden=true;messages.classList.add('active');addMessage(text,'user');input.value='';input.style.height='auto';typing.hidden=false;
+      try{if(!activeChatId){const created=await api('/api/chats',{method:'POST',body:JSON.stringify({message:text})});activeChatId=created.chat.id}else{await api(`/api/chats/${encodeURIComponent(activeChatId)}/messages`,{method:'POST',body:JSON.stringify({message:text})})}const {chat}=await api(`/api/chats/${encodeURIComponent(activeChatId)}`);showChat(chat)}catch(error){showError(error);if(activeChatId){try{const {chat}=await api(`/api/chats/${encodeURIComponent(activeChatId)}`);showChat(chat)}catch{}}else{messages.replaceChildren();messages.classList.remove('active');welcome.hidden=false}}finally{typing.hidden=true;busy=false;send.disabled=!input.value.trim();input.focus()}}
+    form.addEventListener('submit',event=>{event.preventDefault();submitPrompt(input.value)});input.addEventListener('input',()=>{send.disabled=busy||!input.value.trim();input.style.height='auto';input.style.height=`${Math.min(input.scrollHeight,160)}px`});input.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();form.requestSubmit()}});
+    document.querySelectorAll('.suggestion').forEach(button=>button.addEventListener('click',()=>submitPrompt(button.textContent.replace(/^\S+\s+/, '').trim())));
+    document.querySelector('#newChat').addEventListener('click',()=>{activeChatId=null;messages.replaceChildren();messages.classList.remove('active');welcome.hidden=false;notice.textContent='';input.value='';send.disabled=true;renderHistory();input.focus()});
+    loadHistory().catch(showError);
   </script>
 </body>
 </html>
