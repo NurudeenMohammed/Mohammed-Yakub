@@ -29,6 +29,17 @@ The app writes chat history to `data/chats.json` by default. Set `DATA_DIR` to a
 - OpenAI-compatible model requests from the backend, with bounded request sizes and timeout handling
 - No framework or runtime package dependencies
 
+## Deploy to Render
+
+The repository includes `render.yaml` for Render Blueprints. To deploy:
+
+1. Push this repository to GitHub and create a Render account.
+2. In Render, choose **New → Blueprint**, connect this repository, and apply the `render.yaml` blueprint.
+3. Enter your OpenAI API key for `AI_API_KEY` and a model available to your API account for `AI_MODEL` when prompted. The blueprint sets the API base URL, production mode, host binding, and a generated session secret.
+4. Deploy and open the Render service URL. The `/health` endpoint is used for health checks.
+
+The Blueprint configures a persistent disk at `/var/data`, so conversation history survives service restarts and deploys. Render persistent disks require a paid web-service plan and are attached to a single instance; confirm current Render pricing and plan availability before deploying. Keep `AI_API_KEY` as a secret environment variable and never commit it to the repository.
+
 ## Security and deployment notes
 
 This is a single-user/demo application, not a complete multi-user service: guest sessions are not accounts, and anyone who can use a browser profile can access its chats. Use HTTPS in production, set a strong unique `SESSION_SECRET`, restrict access with your hosting platform or add authentication before exposing it publicly, and choose a private persistent data directory. Never commit `.env` or put provider keys in frontend code. For multiple server instances, replace the JSON file store with a transactional database and shared session infrastructure.

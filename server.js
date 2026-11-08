@@ -87,7 +87,9 @@ function getOwnedChat(id, owner) {
 function assertSameOrigin(req) {
   const origin = req.headers.origin;
   if (!origin) return;
-  const expected = `${req.socket.encrypted ? 'https' : 'http'}://${req.headers.host}`;
+  const forwardedProto = req.headers['x-forwarded-proto'];
+  const protocol = forwardedProto ? forwardedProto.split(',')[0].trim() : (req.socket.encrypted ? 'https' : 'http');
+  const expected = `${protocol}://${req.headers.host}`;
   if (origin !== expected) {
     const error = new Error('Cross-origin request rejected.');
     error.status = 403;
@@ -206,6 +208,7 @@ async function handleApi(req, res, url, owner) {
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    if (req.method === 'GET' && url.pathname === '/health') return sendJson(res, 200, { status: 'ok' });
     if (url.pathname.startsWith('/api/')) {
       const owner = getSession(req, res);
       return await handleApi(req, res, url, owner);
